@@ -1,4 +1,4 @@
-module github.com/matterbridge/matterclient
+module github.com/Britaliope/matterclient
 
 go 1.21
 
