@@ -23,8 +23,8 @@ func (m *Client) DeleteMessage(postID string) error {
 	return nil
 }
 
-func (m *Client) EditMessage(postID string, text string) (string, error) {
-	post := &model.Post{Message: text, Id: postID}
+func (m *Client) EditMessage(postID string, text string, props model.StringInterface) (string, error) {
+	post := &model.Post{Message: text, Id: postID, Props: props}
 
 	res, _, err := m.Client.UpdatePost(context.TODO(), postID, post)
 	if err != nil {
@@ -124,11 +124,12 @@ func (m *Client) GetPublicLinks(filenames []string) []string {
 	return output
 }
 
-func (m *Client) PostMessage(channelID string, text string, rootID string) (string, error) {
+func (m *Client) PostMessage(channelID string, text string, rootID string, props model.StringInterface) (string, error) {
 	post := &model.Post{
 		ChannelId: channelID,
 		Message:   text,
 		RootId:    rootID,
+		Props:     props,
 	}
 
 	for {
@@ -143,12 +144,13 @@ func (m *Client) PostMessage(channelID string, text string, rootID string) (stri
 	}
 }
 
-func (m *Client) PostMessageWithFiles(channelID string, text string, rootID string, fileIds []string) (string, error) {
+func (m *Client) PostMessageWithFiles(channelID string, text string, rootID string, fileIds []string, props model.StringInterface) (string, error) {
 	post := &model.Post{
 		ChannelId: channelID,
 		Message:   text,
 		RootId:    rootID,
 		FileIds:   fileIds,
+		Props:     props,
 	}
 
 	for {
